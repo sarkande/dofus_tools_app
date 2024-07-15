@@ -35,9 +35,13 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Install appdmg on macOS
+      - name: Install distutils and appdmg on macOS
         if: matrix.os == 'macos-latest'
-        run: npm install appdmg
+        run: |
+          python3 -m ensurepip
+          python3 -m pip install setuptools
+          python3 -m pip install distutils
+          npm install appdmg
 
       - name: Build TypeScript files
         run: npm run build
