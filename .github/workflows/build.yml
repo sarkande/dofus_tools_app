@@ -35,10 +35,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Install distutils and appdmg on macOS
+      - name: Set up Python environment on macOS
         if: matrix.os == 'macos-latest'
         run: |
-          python3 -m ensurepip
+          python3 -m venv venv
+          source venv/bin/activate
           python3 -m pip install setuptools
           python3 -m pip install distutils
           npm install appdmg
