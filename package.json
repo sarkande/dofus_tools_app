@@ -36,6 +36,7 @@
     "@electron/fuses": "^1.8.0",
     "@types/electron": "^1.6.10",
     "@types/node": "^20.14.10",
+    "appdmg": "^0.6.6",
     "electron": "^31.2.0",
     "typescript": "^5.5.3"
   },
