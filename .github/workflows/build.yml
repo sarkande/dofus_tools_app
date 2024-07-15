@@ -32,7 +32,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Install dependencies
+      - name: Install dependencies on Linux and Windows
+        if: matrix.os != 'macos-latest'
+        run: npm install --ignore-scripts
+
+      - name: Install dependencies on macOS
+        if: matrix.os == 'macos-latest'
         run: npm install
 
       - name: Build TypeScript files
@@ -73,7 +78,7 @@ jobs:
         id: create_release
         uses: actions/create-release@v1
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: v${{ github.run_number }}
           release_name: Release ${{ github.run_number }}
@@ -84,7 +89,7 @@ jobs:
         if: always()
         uses: actions/upload-release-asset@v1
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: artifacts/macos
@@ -95,7 +100,7 @@ jobs:
         if: always()
         uses: actions/upload-release-asset@v1
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: artifacts/windows
