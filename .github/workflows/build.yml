@@ -37,7 +37,9 @@ jobs:
 
       - name: Install appdmg on macOS
         if: matrix.os == 'macos-latest'
-        run: npm install appdmg
+        run: |
+          brew install node-gyp
+          npm install -g appdmg
 
       - name: Build TypeScript files
         run: npm run build
